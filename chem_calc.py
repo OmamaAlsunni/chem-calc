@@ -871,13 +871,7 @@ if __name__ == "__main__":
   def main_streamlit():
     st.title("Chemistry Calculator")
     st.write("Welcome to the Chemistry Calculator! Select an operation from the sidebar to get started.")
-    st.markdown(
-    """
-    <div style="text-align: center; font-size: small; margin-top: 20px;">
-        تطوير أُمامة فتح الرحمن السُنِي
-    </div>
-    """)
-
+    
     menu_options = [
       "Mole & Mass Calculations", 
       "Stoichiometry", 
@@ -1220,6 +1214,9 @@ if __name__ == "__main__":
       if st.button("Calculate"):
         percentage = element_mass*100/compound_mass
         st.success(f"Percentage per mass: {percentage:.2f}%")
+
+    st.write(" تطوير: أُمامة فتح الرحمن السُنِي")
+
 
   # Run the Streamlit app
   main_streamlit()
