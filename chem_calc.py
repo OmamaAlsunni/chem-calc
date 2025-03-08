@@ -1215,14 +1215,7 @@ if __name__ == "__main__":
         percentage = element_mass*100/compound_mass
         st.success(f"Percentage per mass: {percentage:.2f}%")
 
-    st.markdown(
-    """
-    <div style="text-align: center; font-size: small; position: fixed; bottom: 0; width: 100%; padding: 10px; background-color: white;">
-        تطوير: أُمامة فتح الرحمن السُنِي
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    st.markdown("\n\n\n\n \nDeveloped by Omamah Fath AL-Rahman Alsunni")
 
 
   # Run the Streamlit app
