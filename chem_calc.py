@@ -871,6 +871,12 @@ if __name__ == "__main__":
   def main_streamlit():
     st.title("Chemistry Calculator")
     st.write("Welcome to the Chemistry Calculator! Select an operation from the sidebar to get started.")
+    st.markdown(
+    """
+    <div style="text-align: center; font-size: small; margin-top: 20px;">
+        تطوير أُمامة فتح الرحمن السُنِي
+    </div>
+    """)
 
     menu_options = [
       "Mole & Mass Calculations", 
