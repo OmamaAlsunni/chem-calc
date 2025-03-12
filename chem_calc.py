@@ -975,40 +975,73 @@ if __name__ == "__main__":
 
     elif option == "Stoichiometry":
       st.header("Stoichiometry")
-      st.subheader("Empirical & Molecular Formulas")
 
-      st.write("Enter the mass of each element in your compound:")
+      sub_option = st.selectbox("Choose calculation type:", 
+                              ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
+      if sub_option == "Empirical & Molecular Formulas"
+        st.subheader("Empirical & Molecular Formulas")
 
-      element1 = st.text_input("Element 1:", "C").capitalize()
-      mass1 = st.number_input("Mass of Element 1 (g):", min_value=0.0, value=1.0, step=0.1)
+        st.write("Enter the mass of each element in your compound:")
 
-      element2 = st.text_input("Element 2:", "H").capitalize()
-      mass2 = st.number_input("Mass of Element 2 (g):", min_value=0.0, value=1.0, step=0.1)
+        import streamlit as st
 
-      if st.button("Calculate Empirical Formula"):
-        if element1 in elements and element2 in elements:
-          element1_obj = elements[element1]
-          element2_obj = elements[element2]
+# Initialize session state variables
+if 'elements_added' not in st.session_state:
+    st.session_state.elements_added = []
 
-          moles1 = mass1/element1_obj.atomic_mass
-          moles2 = mass2/element2_obj.atomic_mass
+# Display current elements added
+if st.session_state.elements_added:
+    st.write("Elements added:")
+    for elem in st.session_state.elements_added:
+        st.write(f"- {elem}")
 
-          min_moles = min(moles1, moles2)
-          ratio1 = moles1/min_moles
-          ratio2 = moles2/min_moles
+# Input fields for adding elements
+st.write("Add elements")
+col1, col2 = st.columns(2)
+with col1:
+    element = st.text_input("Element name or symbol:", "C").capitalize()
+with col2:
+    mass = st.number_input("Mass of element (g):", min_value=1, value=10, step=1)
 
-          # Round to nearest whole number
-          ratio1_rounded = round(ratio1)
-          ratio2_rounded = round(ratio2)
+# Add element to the list
+if st.button("Add Element"):
+    if element in elements:  # Assuming `elements` is a dictionary of element data
+        element_obj = elements[element]
+        moles = mass / element_obj.atomic_mass
+        st.session_state.elements_added.append((element, moles))  # Store element and its moles
+        st.success(f"{element} added successfully!")
+    else:
+        st.error(f"{element} not found in the periodic table")
 
-          subscript_digits = str.maketrans("0123456789","₀₁₂₃₄₅₆₇₈₉")
-          formula = f"{element1}{str(ratio1_rounded).translate(subscript_digits) if ratio1_rounded>1 else''}" + \
-                    f"{element2}{str(ratio2_rounded).translate(subscript_digits) if ratio2_rounded>1 else''}"
+# Calculate empirical formula
+if st.button("Calculate Empirical Formula"):
+    if len(st.session_state.elements_added) >= 1:
+        # Extract moles for all elements
+        moles_list = [moles for _, moles in st.session_state.elements_added]
+        
+        # Find the minimum moles
+        min_moles = min(moles_list)
+        
+        # Calculate the ratio for each element
+        empirical_formula = ""
+        for elem, moles in st.session_state.elements_added:
+            ratio = moles / min_moles
+            ratio_rounded = round(ratio)  # Round to nearest whole number
+            
+            # Convert numbers to subscripts
+            subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+            subscript = str(ratio_rounded).translate(subscript_digits) if ratio_rounded > 1 else ""
+            
+            # Append to the formula
+            empirical_formula += f"{elem}{subscript}"
+        
+        st.success(f"Empirical formula: {empirical_formula}")
+    else:
+        st.error("Please add at least one element to calculate the empirical formula.")
+      
+      
 
-          st.success(f"Empirical formula: {formula}")
-        else:
-          st.error("One or both elements not found in the periodic table")
-
+      
     elif option == "Solution Concentration":
       st.header("Solution Concentration")
 
