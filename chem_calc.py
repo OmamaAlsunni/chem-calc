@@ -982,64 +982,63 @@ if __name__ == "__main__":
         st.subheader("Empirical & Molecular Formulas")
 
         st.write("Enter the mass of each element in your compound:")
-
-        import streamlit as st
-
+        
 # Initialize session state variables
-if 'elements_added' not in st.session_state:
-    st.session_state.elements_added = []
+        if 'elements_added' not in st.session_state:
+          st.session_state.elements_added = []
 
 # Display current elements added
-if st.session_state.elements_added:
-    st.write("Elements added:")
-    for elem in st.session_state.elements_added:
-        st.write(f"- {elem}")
+        if st.session_state.elements_added:
+          st.write("Elements added:")
+          for elem in st.session_state.elements_added:
+            st.write(f"- {elem}")
 
 # Input fields for adding elements
-st.write("Add elements")
-col1, col2 = st.columns(2)
-with col1:
-    element = st.text_input("Element name or symbol:", "C").capitalize()
-with col2:
-    mass = st.number_input("Mass of element (g):", min_value=1, value=10, step=1)
+        st.write("Add elements")
+        col1, col2 = st.columns(2)
+        with col1:
+          element = st.text_input("Element name or symbol:", "C").capitalize()
+        with col2:
+          mass = st.number_input("Mass of element (g):", min_value=1, value=10, step=1)
 
 # Add element to the list
-if st.button("Add Element"):
-    if element in elements:  # Assuming `elements` is a dictionary of element data
-        element_obj = elements[element]
-        moles = mass / element_obj.atomic_mass
-        st.session_state.elements_added.append((element, moles))  # Store element and its moles
-        st.success(f"{element} added successfully!")
-    else:
-        st.error(f"{element} not found in the periodic table")
+        if st.button("Add Element"):
+          if element in elements: 
+            element_obj = elements[element]
+            moles = mass / element_obj.atomic_mass
+            st.session_state.elements_added.append((element, moles))  # Store element and its moles
+            st.success(f"{element} added successfully!")
+        else:
+          st.error(f"{element} not found in the periodic table")
 
 # Calculate empirical formula
-if st.button("Calculate Empirical Formula"):
-    if len(st.session_state.elements_added) >= 1:
+        if st.button("Calculate Empirical Formula"):
+          if len(st.session_state.elements_added) >= 1:
         # Extract moles for all elements
-        moles_list = [moles for _, moles in st.session_state.elements_added]
+            moles_list = [moles for _, moles in st.session_state.elements_added]
         
         # Find the minimum moles
-        min_moles = min(moles_list)
+            min_moles = min(moles_list)
         
         # Calculate the ratio for each element
-        empirical_formula = ""
-        for elem, moles in st.session_state.elements_added:
-            ratio = moles / min_moles
-            ratio_rounded = round(ratio)  # Round to nearest whole number
+            empirical_formula = ""
+            for elem, moles in st.session_state.elements_added:
+              ratio = moles / min_moles
+              ratio_rounded = round(ratio)  # Round to nearest whole number
             
             # Convert numbers to subscripts
-            subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
-            subscript = str(ratio_rounded).translate(subscript_digits) if ratio_rounded > 1 else ""
+              subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+              subscript = str(ratio_rounded).translate(subscript_digits) if ratio_rounded > 1 else ""
             
             # Append to the formula
-            empirical_formula += f"{elem}{subscript}"
+              empirical_formula += f"{elem}{subscript}"
         
-        st.success(f"Empirical formula: {empirical_formula}")
-    else:
-        st.error("Please add at least one element to calculate the empirical formula.")
+            st.success(f"Empirical formula: {empirical_formula}")
+          else:
+            st.error("Please add at least one element to calculate the empirical formula.")
       
-      
+      elif sub_option == "Formulas of Hydrates"
+        st.write("coming soon")
 
       
     elif option == "Solution Concentration":
