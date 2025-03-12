@@ -978,7 +978,7 @@ if __name__ == "__main__":
 
       sub_option = st.selectbox("Choose calculation type:", 
                               ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
-      if sub_option == "Empirical & Molecular Formulas"
+      if sub_option == "Empirical & Molecular Formulas":
         st.subheader("Empirical & Molecular Formulas")
 
         st.write("Enter the mass of each element in your compound:")
@@ -1037,7 +1037,7 @@ if __name__ == "__main__":
           else:
             st.error("Please add at least one element to calculate the empirical formula.")
       
-      elif sub_option == "Formulas of Hydrates"
+      elif sub_option == "Formulas of Hydrates":
         st.write("coming soon")
 
       
