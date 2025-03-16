@@ -1038,7 +1038,7 @@ if __name__ == "__main__":
         if st.button("Reset all elements"):
           st.session_state.elements_added = []
           st.success("All elements reset!")
-            st.rerun()
+          st.rerun()
         
       
       elif sub_option == "Formulas of Hydrates":
