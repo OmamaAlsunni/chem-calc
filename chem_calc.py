@@ -1022,7 +1022,9 @@ if __name__ == "__main__":
             empirical_formula = ""
             for elem, moles in st.session_state.elements_added:
               ratio = moles / min_moles
-              ratio_rounded = round(ratio)  # Round to nearest whole number
+              multiplier = find_smallest_multiplier(ratio)
+              ratio_rounded = {round(num*multiplier) for num in ratio}
+  # Round to nearest whole number
             
             # Convert numbers to subscripts
               subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
