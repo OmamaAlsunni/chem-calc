@@ -1006,8 +1006,8 @@ if __name__ == "__main__":
             moles = mass / element_obj.atomic_mass
             st.session_state.elements_added.append((element, moles))  # Store element and its moles
             st.success(f"{element} added successfully!")
-        else:
-          st.error(f"{element} not found in the periodic table")
+          else:
+            st.error(f"{element} not found in the periodic table")
 
 # Calculate empirical formula
         if st.button("Calculate Empirical Formula"):
