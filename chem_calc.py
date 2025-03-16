@@ -980,11 +980,16 @@ if __name__ == "__main__":
                               ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
       if sub_option == "Empirical & Molecular Formulas":
         st.subheader("Empirical & Molecular Formulas")
-  
+      
 # Initialize session state variables
         if 'elements_added' not in st.session_state:
           st.session_state.elements_added = []
-
+        if 'element_input' not in st.session_state:
+          st.session_state.element_input = "C"  # Default value for element input
+        if 'mass_input' not in st.session_state:
+          st.session_state.mass_input = 10.0  # Default value for mass input
+ 
+        
 # Display current elements added
         if st.session_state.elements_added:
           st.write("Elements added:")
@@ -1038,6 +1043,8 @@ if __name__ == "__main__":
 
         if st.button("Reset all elements"):
           st.session_state.elements_added = []
+          st.session_state.element_input = "C"  # Reset element input to default
+          st.session_state.mass_input = 10.0  # Reset mass input to default
           st.success("All elements reset!")
           st.rerun()
         
