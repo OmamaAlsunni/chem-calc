@@ -980,9 +980,7 @@ if __name__ == "__main__":
                               ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
       if sub_option == "Empirical & Molecular Formulas":
         st.subheader("Empirical & Molecular Formulas")
-
-        st.write("Enter the mass of each element in your compound:")
-        
+  
 # Initialize session state variables
         if 'elements_added' not in st.session_state:
           st.session_state.elements_added = []
@@ -994,7 +992,7 @@ if __name__ == "__main__":
             st.write(f"- {elem}")
 
 # Input fields for adding elements
-        st.write("Add elements")
+       
         col1, col2 = st.columns(2)
         with col1:
           element = st.text_input("Element name or symbol:", "C").capitalize()
@@ -1036,6 +1034,12 @@ if __name__ == "__main__":
             st.success(f"Empirical formula: {empirical_formula}")
           else:
             st.error("Please add at least one element to calculate the empirical formula.")
+
+        if st.button("Reset all elements"):
+          st.session_state.elements_added = []
+          st.success("All elements reset!")
+            st.rerun()
+        
       
       elif sub_option == "Formulas of Hydrates":
         st.write("coming soon")
