@@ -1002,9 +1002,9 @@ if __name__ == "__main__":
   # Input fields for adding elements
         col1, col2 = st.columns(2)
         with col1:
-          element = st.text_input("Element name or symbol:", "C").capitalize()
+          element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
         with col2:
-          mass = st.number_input("Mass of element (g):", min_value=0.01, value=10.0, step=0.01)
+          mass = st.number_input("Mass of element (g):", placeholder="10.00", min_value=0.01, value=None, step=0.01)
 
   # Add element to the list
         if st.button("Add Element"):
