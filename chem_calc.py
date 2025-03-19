@@ -984,11 +984,6 @@ if __name__ == "__main__":
 # Initialize session state variables
         if 'elements_added' not in st.session_state:
           st.session_state.elements_added = []
-        if 'element_input' not in st.session_state:
-          st.session_state.element_input = "C"  # Default value for element input
-        if 'mass_input' not in st.session_state:
-          st.session_state.mass_input = 10.0  # Default value for mass input
- 
         
 # Display current elements added
         if st.session_state.elements_added:
@@ -1000,9 +995,9 @@ if __name__ == "__main__":
        
         col1, col2 = st.columns(2)
         with col1:
-          element = st.text_input("Element name or symbol:", "C").capitalize()
+          element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
         with col2:
-          mass = st.number_input("Mass of element (g):", min_value=1.0, value=10.0, step=0.01)
+          mass = st.number_input("Mass of element (g):", placeholder="10.00", value=None, min_value=1.0, step=0.01)
 
 # Add element to the list
         if st.button("Add Element"):
