@@ -973,7 +973,7 @@ if __name__ == "__main__":
           else:
             st.error(f"{element} does not correspond to any recognized chemical element")
 
-   elif option == "Stoichiometry":
+    elif option == "Stoichiometry":
     st.header("Stoichiometry")
 
     sub_option = st.selectbox("Choose calculation type:", 
@@ -1030,7 +1030,7 @@ if __name__ == "__main__":
             st.rerun()
 
     elif sub_option == "Formulas of Hydrates":
-        st.write("coming soon")
+        st.write("coming soon")   
       
     elif option == "Solution Concentration":
       st.header("Solution Concentration")
