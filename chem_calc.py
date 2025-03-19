@@ -974,11 +974,11 @@ if __name__ == "__main__":
             st.error(f"{element} does not correspond to any recognized chemical element")
 
     elif option == "Stoichiometry":
-    st.header("Stoichiometry")
+      st.header("Stoichiometry")
 
-    sub_option = st.selectbox("Choose calculation type:", 
+      sub_option = st.selectbox("Choose calculation type:", 
                              ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
-    if sub_option == "Empirical & Molecular Formulas":
+      if sub_option == "Empirical & Molecular Formulas":
         st.subheader("Empirical & Molecular Formulas")
 
         # Initialize session state variables
