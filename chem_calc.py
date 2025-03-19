@@ -988,16 +988,11 @@ if __name__ == "__main__":
         if 'elements_added' not in st.session_state:
           st.session_state.elements_added = []
     
-  # Display current elements added with properly formatted information
+  # Display current elements added in a simple list like compound molar mass
         if st.session_state.elements_added:
           st.write("Elements added:")
-    
-    # Create a neat table to display elements
-          element_data = []
           for elem, mass, moles in st.session_state.elements_added:
-            element_data.append({"Element": elem, "Mass (g)": f"{mass:.4f}", "Moles": f"{moles:.4f}"})
-    
-          st.table(element_data)
+            st.write(f"- {elem}: {mass:.4f} g")
 
   # Input fields for adding elements
         col1, col2 = st.columns(2)
@@ -1013,7 +1008,7 @@ if __name__ == "__main__":
             moles = mass / element_obj.atomic_mass
       # Store element, mass, and moles
             st.session_state.elements_added.append((element, mass, moles))
-            st.success(f"{element} ({element_obj.name}) added: {mass:.4f}g = {moles:.4f} mol")
+            st.success(f"Added {element}: {mass:.4f} g")
             st.rerun()
           else:
             st.error(f"{element} not found in the periodic table")
@@ -1047,25 +1042,10 @@ if __name__ == "__main__":
       # Generate the empirical formula with subscripts
             subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
             empirical_formula = "".join([f"{elem}{str(num).translate(subscript_digits) if num>1 else''}" 
-                                  for elem, num in final_ratios.items()])
+                           for elem, num in final_ratios.items()])
       
-      # Display formula and ratio details
+      # Display formula
             st.success(f"Empirical formula: {empirical_formula}")
-      
-      # Display detailed ratio calculation
-            st.write("### Calculation Details")
-            details = []
-            for elem, _, moles in st.session_state.elements_added:
-              ratio = ratio_dict[elem]
-              final = final_ratios[elem]
-              details.append({
-                "Element": elem,
-                "Moles": f"{moles:.4f}",
-                "Relative Ratio": f"{ratio:.2f}",
-                "Final Ratio": final
-        })
-            st.table(details)
-      
           else:
             st.error("Please add at least one element to calculate the empirical formula.")
 
