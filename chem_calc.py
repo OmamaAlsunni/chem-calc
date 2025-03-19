@@ -1016,30 +1016,31 @@ if __name__ == "__main__":
 
 # Calculate empirical formula
         if st.button("Calculate Empirical Formula"):
-          if len(st.session_state.elements_added) >= 1:
-        # Extract moles for all elements
-            moles_list = [moles for _, moles in st.session_state.elements_added]
-        
-        # Find the minimum moles
-            min_moles = min(moles_list)
-        
-        # Calculate the ratio for each element
-            empirical_formula = ""
-            for elem, moles in st.session_state.elements_added:
-              ratio = moles / min_moles
-              ratio_rounded = round(ratio)
-  # Round to nearest whole number
-            
-            # Convert numbers to subscripts
-              subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
-              subscript = str(ratio_rounded).translate(subscript_digits) if ratio_rounded > 1 else ""
-            
-            # Append to the formula
-              empirical_formula += f"{elem}{subscript}"
-        
-            st.success(f"Empirical formula: {empirical_formula}")
-          else:
-            st.error("Please add at least one element to calculate the empirical formula.")
+  if len(st.session_state.elements_added) >= 1:
+    # Create a dictionary of element:moles
+    moles_dict = {elem: moles for elem, moles in st.session_state.elements_added}
+    
+    # Find the minimum moles
+    min_moles = min(moles_dict.values())
+    
+    # Calculate the ratio for each element
+    ratio_dict = {elem: mol/min_moles for elem, mol in moles_dict.items()}
+    
+    # Use the find_smallest_multiplier function to get proper whole numbers
+    multiplier = find_smallest_multiplier(ratio_dict.values())
+    
+    # Calculate final ratios with proper rounding
+    final_ratios = {elem: round(num*multiplier) for elem, num in ratio_dict.items()}
+    
+    # Convert numbers to subscripts
+    subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+    
+    # Build the empirical formula
+    empirical_formula = "".join([f"{elem}{str(num).translate(subscript_digits) if num>1 else''}" for elem, num in final_ratios.items()])
+    
+    st.success(f"Empirical formula: {empirical_formula}")
+  else:
+    st.error("Please add at least one element to calculate the empirical formula.")
 
         if st.button("Reset all elements"):
           st.session_state.elements_added = []
