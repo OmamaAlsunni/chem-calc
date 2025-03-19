@@ -999,7 +999,7 @@ if __name__ == "__main__":
         with col1:
           element = st.text_input("Element name or symbol:", value=st.session_state.get("element_input", ""), placeholder="C").capitalize()
         with col2:
-          mass = st.number_input("Mass of element (g):", value=st.session_state.get("mass_input", 0.0) placeholder="10.00", min_value=0.0, step=0.01)
+          mass = st.number_input("Mass of element (g):", value=st.session_state.get("mass_input", 0.0), placeholder="10.00", min_value=0.0, step=0.01)
 
   # Add element to the list
         if st.button("Add Element"):
