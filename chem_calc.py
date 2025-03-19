@@ -1050,7 +1050,12 @@ if __name__ == "__main__":
             st.error("Please add at least one element to calculate the empirical formula.")
 
         if st.button("Reset all elements"):
-          st.session_state.elements_added = []
+          if "elements_added" in st.session_state:
+            st.session_state.elements_added = []
+          if "element_input" in st.session_state:
+            del st.session_state.element_input 
+          if "mass_input" in st.session_state:
+            del st.session_state.mass_input 
           st.success("All elements reset!")
           st.rerun()
         
