@@ -977,60 +977,81 @@ if __name__ == "__main__":
       st.header("Stoichiometry")
 
       sub_option = st.selectbox("Choose calculation type:", 
-                             ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
+                              ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
       if sub_option == "Empirical & Molecular Formulas":
         st.subheader("Empirical & Molecular Formulas")
-
-        # Initialize session state variables
+      
+# Initialize session state variables
         if 'elements_added' not in st.session_state:
-            st.session_state.elements_added = []
+          st.session_state.elements_added = []
         if 'element_input' not in st.session_state:
-            st.session_state.element_input = "C"  # Default value for element input
+          st.session_state.element_input = "C"  # Default value for element input
         if 'mass_input' not in st.session_state:
-            st.session_state.mass_input = 10.0  # Default value for mass input
-
-        # Display current elements added
+          st.session_state.mass_input = 10.0  # Default value for mass input
+ 
+        
+# Display current elements added
         if st.session_state.elements_added:
-            st.write("Elements added:")
-            for elem in st.session_state.elements_added:
-                st.write(f"- {elem}")
+          st.write("Elements added:")
+          for elem in st.session_state.elements_added:
+            st.write(f"- {elem}")
 
-        # Input fields for adding elements
+# Input fields for adding elements
+       
         col1, col2 = st.columns(2)
         with col1:
-            element = st.text_input("Element name or symbol:", "C").capitalize()
+          element = st.text_input("Element name or symbol:", "C").capitalize()
         with col2:
-            mass = st.number_input("Mass of element (g):", min_value=1.0, value=10.0, step=0.01)
+          mass = st.number_input("Mass of element (g):", min_value=1.0, value=10.0, step=0.01)
 
-        # Add element to the list
+# Add element to the list
         if st.button("Add Element"):
-            if element in elements: 
-                element_obj = elements[element]
-                moles = mass / element_obj.atomic_mass
-                st.session_state.elements_added.append((element, moles))  # Store element and its moles
-                st.success(f"{element} added successfully!")
-            else:
-                st.error(f"{element} not found in the periodic table")
+          if element in elements: 
+            element_obj = elements[element]
+            moles = mass / element_obj.atomic_mass
+            st.session_state.elements_added.append((element, moles))  # Store element and its moles
+            st.success(f"{element} added successfully!")
+          else:
+            st.error(f"{element} not found in the periodic table")
 
-        # Calculate empirical formula
+# Calculate empirical formula
         if st.button("Calculate Empirical Formula"):
-            if len(st.session_state.elements_added) >= 1:
-                # Call the empirical_formula_calculation function
-                moles_dict = {elem: moles for elem, moles in st.session_state.elements_added}
-                empirical_formula = empirical_formula_calculation(moles_dict)
-                st.success(f"Empirical formula: {empirical_formula}")
-            else:
-                st.error("Please add at least one element to calculate the empirical formula.")
+          if len(st.session_state.elements_added) >= 1:
+        # Extract moles for all elements
+            moles_list = [moles for _, moles in st.session_state.elements_added]
+        
+        # Find the minimum moles
+            min_moles = min(moles_list)
+        
+        # Calculate the ratio for each element
+            empirical_formula = ""
+            for elem, moles in st.session_state.elements_added:
+              ratio = moles / min_moles
+              ratio_rounded = round(ratio)
+  # Round to nearest whole number
+            
+            # Convert numbers to subscripts
+              subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+              subscript = str(ratio_rounded).translate(subscript_digits) if ratio_rounded > 1 else ""
+            
+            # Append to the formula
+              empirical_formula += f"{elem}{subscript}"
+        
+            st.success(f"Empirical formula: {empirical_formula}")
+          else:
+            st.error("Please add at least one element to calculate the empirical formula.")
 
         if st.button("Reset all elements"):
-            st.session_state.elements_added = []
-            st.session_state.element_input = "C"  # Reset element input to default
-            st.session_state.mass_input = 10.0  # Reset mass input to default
-            st.success("All elements reset!")
-            st.rerun()
+          st.session_state.elements_added = []
+          st.session_state.element_input = "C"  # Reset element input to default
+          st.session_state.mass_input = 10.0  # Reset mass input to default
+          st.success("All elements reset!")
+          st.rerun()
+        
+      
+      elif sub_option == "Formulas of Hydrates":
+        st.write("coming soon")
 
-    elif sub_option == "Formulas of Hydrates":
-        st.write("coming soon")   
       
     elif option == "Solution Concentration":
       st.header("Solution Concentration")
