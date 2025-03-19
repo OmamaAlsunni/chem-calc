@@ -997,9 +997,9 @@ if __name__ == "__main__":
   # Input fields for adding elements
         col1, col2 = st.columns(2)
         with col1:
-          element = st.text_input("Element name or symbol:", value=st.session_state.get("element_input", ""), placeholder="C").capitalize()
+          element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
         with col2:
-          mass = st.number_input("Mass of element (g):", value=st.session_state.get("mass_input", 10.0), placeholder="10.00", min_value=0.0, step=0.01)
+          mass = st.number_input("Mass of element (g):", value=None, placeholder="10.00", min_value=0.0, step=0.01)
 
   # Add element to the list
         if st.button("Add Element"):
@@ -1050,12 +1050,7 @@ if __name__ == "__main__":
             st.error("Please add at least one element to calculate the empirical formula.")
 
         if st.button("Reset all elements"):
-          if "elements_added" in st.session_state:
-            st.session_state.elements_added = []
-          if "element_input" in st.session_state:
-            del st.session_state.element_input 
-          if "mass_input" in st.session_state:
-            del st.session_state.mass_input 
+          st.session_state.elements_added = []
           st.success("All elements reset!")
           st.rerun()
         
