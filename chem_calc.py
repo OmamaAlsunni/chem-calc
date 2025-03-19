@@ -891,8 +891,8 @@ if __name__ == "__main__":
 
       if sub_option == "Find moles":
         st.subheader("Finding number of moles")
-        mass = st.number_input("Mass (g):", min_value=0.0, value=1.0, step=0.1)
-        element = st.text_input("Element name or symbol:", "H").capitalize()
+        mass = st.number_input("Mass (g):", placeholder="1.0", value=None, min_value=0.0,step=0.1)
+        element = st.text_input("Element name or symbol:", placeholder="H").capitalize()
 
         if st.button("Calculate"):
           if element in elements:
@@ -908,8 +908,8 @@ if __name__ == "__main__":
 
       elif sub_option == "Find mass":
         st.subheader("Finding mass")
-        moles = st.number_input("Number of moles (mol):", min_value=0.0, value=1.0, step=0.1)
-        element = st.text_input("Element name or symbol:", "H").capitalize()
+        moles = st.number_input("Number of moles (mol):", placeholder="1.0", value=None, min_value=0.0, step=0.1)
+        element = st.text_input("Element name or symbol:", placeholder="H").capitalize()
 
         if st.button("Calculate"):
           if element in elements:
@@ -941,9 +941,9 @@ if __name__ == "__main__":
         col1, col2 = st.columns(2)
 
         with col1:
-          element = st.text_input("Element name or symbol:", "C").capitalize()
+          element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
         with col2:
-          atoms = st.number_input("Number of atoms:", min_value=1, value=1, step=1)
+          atoms = st.number_input("Number of atoms:", placeholder="1", value=None, min_value=1, step=1)
 
         if st.button("Add Element"):
           if element in elements:
@@ -964,7 +964,7 @@ if __name__ == "__main__":
 
       elif sub_option == "Element molar mass":
         st.subheader("Element Molar Mass")
-        element = st.text_input("Element name or symbol:", "Fe").capitalize()
+        element = st.text_input("Element name or symbol:", placeholder="Fe").capitalize()
 
         if st.button("Search"):
           if element in elements:
