@@ -978,69 +978,99 @@ if __name__ == "__main__":
 
       sub_option = st.selectbox("Choose calculation type:", 
                               ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
+      # Improved empirical formula calculation for Streamlit
+# To be added to your main_streamlit() function under the "Empirical & Molecular Formulas" section
+
       if sub_option == "Empirical & Molecular Formulas":
         st.subheader("Empirical & Molecular Formulas")
-      
-# Initialize session state variables
+
+  # Initialize session state variables
         if 'elements_added' not in st.session_state:
           st.session_state.elements_added = []
-        
-# Display current elements added
+    
+  # Display current elements added with properly formatted information
         if st.session_state.elements_added:
           st.write("Elements added:")
-          for elem in st.session_state.elements_added:
-            st.write(f"- {elem}")
+    
+    # Create a neat table to display elements
+          element_data = []
+          for elem, mass, moles in st.session_state.elements_added:
+            element_data.append({"Element": elem, "Mass (g)": f"{mass:.4f}", "Moles": f"{moles:.4f}"})
+    
+          st.table(element_data)
 
-# Input fields for adding elements
-       
+  # Input fields for adding elements
         col1, col2 = st.columns(2)
         with col1:
-          element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
+          element = st.text_input("Element name or symbol:", "C").capitalize()
         with col2:
-          mass = st.number_input("Mass of element (g):", placeholder="10.00", value=None, min_value=1.0, step=0.01)
+          mass = st.number_input("Mass of element (g):", min_value=0.01, value=10.0, step=0.01)
 
-# Add element to the list
+  # Add element to the list
         if st.button("Add Element"):
           if element in elements: 
             element_obj = elements[element]
             moles = mass / element_obj.atomic_mass
-            st.session_state.elements_added.append((element, moles))  # Store element and its moles
-            st.success(f"{element} added successfully!")
+      # Store element, mass, and moles
+            st.session_state.elements_added.append((element, mass, moles))
+            st.success(f"{element} ({element_obj.name}) added: {mass:.4f}g = {moles:.4f} mol")
+            st.rerun()
           else:
             st.error(f"{element} not found in the periodic table")
 
-# Calculate empirical formula
+  # Calculate empirical formula
         if st.button("Calculate Empirical Formula"):
           if len(st.session_state.elements_added) >= 1:
-    # Create a dictionary of element:moles
-            moles_dict = {elem: moles for elem, moles in st.session_state.elements_added}
-    
-    # Find the minimum moles
+      # Extract moles for all elements
+            moles_dict = {elem: moles for elem, _, moles in st.session_state.elements_added}
+      
+      # Find the minimum moles
             min_moles = min(moles_dict.values())
-    
-    # Calculate the ratio for each element
-            ratio_dict = {elem: mol/min_moles for elem, mol in moles_dict.items()}
-    
-    # Use the find_smallest_multiplier function to get proper whole numbers
-            multiplier = find_smallest_multiplier(ratio_dict.values())
-    
-    # Calculate final ratios with proper rounding
+      
+      # Calculate the ratio for each element
+            ratio_dict = {elem: moles/min_moles for elem, moles in moles_dict.items()}
+      
+      # Find smallest multiplier to get whole numbers
+            decimals = [val % 1 for val in ratio_dict.values() if val % 1 != 0]
+            if decimals:
+              denominators = [round(1/d) for d in decimals]
+              lcm = denominators[0]
+              for num in denominators[1:]:
+                lcm = (lcm*num)//gcd(lcm, num)
+              multiplier = lcm
+            else:
+              multiplier = 1
+      
+      # Calculate final whole-number ratios
             final_ratios = {elem: round(num*multiplier) for elem, num in ratio_dict.items()}
-    
-    # Convert numbers to subscripts
+      
+      # Generate the empirical formula with subscripts
             subscript_digits = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
-    
-    # Build the empirical formula
-            empirical_formula = "".join([f"{elem}{str(num).translate(subscript_digits) if num>1 else''}" for elem, num in final_ratios.items()])
-    
+            empirical_formula = "".join([f"{elem}{str(num).translate(subscript_digits) if num>1 else''}" 
+                                  for elem, num in final_ratios.items()])
+      
+      # Display formula and ratio details
             st.success(f"Empirical formula: {empirical_formula}")
+      
+      # Display detailed ratio calculation
+            st.write("### Calculation Details")
+            details = []
+            for elem, _, moles in st.session_state.elements_added:
+              ratio = ratio_dict[elem]
+              final = final_ratios[elem]
+              details.append({
+                "Element": elem,
+                "Moles": f"{moles:.4f}",
+                "Relative Ratio": f"{ratio:.2f}",
+                "Final Ratio": final
+        })
+            st.table(details)
+      
           else:
             st.error("Please add at least one element to calculate the empirical formula.")
 
         if st.button("Reset all elements"):
           st.session_state.elements_added = []
-          st.session_state.element_input = "C"  # Reset element input to default
-          st.session_state.mass_input = 10.0  # Reset mass input to default
           st.success("All elements reset!")
           st.rerun()
         
