@@ -1056,9 +1056,67 @@ if __name__ == "__main__":
         
       
       elif sub_option == "Formulas of Hydrates":
-        st.write("coming soon")
+        st.subheader("Formulas of Hydrates")
 
-      
+        #initializing hydrated and anhydrous salt to 0
+        if 'hydrated_salt_mass' not in st.session_state:
+          st.session_state.hydrated_salt_mass= 0
+          
+        if 'anhydrous_salt_mass' not in st.session_state:
+          st.session_state.anhydrous_salt_mass= 0
+
+        if 'anhydrous_salt_molar_mass' not in st.session_state:
+            st.session_state.anhydrous_salt_molar_mass = 0
+            st.session_state.elements_added = []
+
+        if st.session_state.elements_added:
+            st.write("Elements added:")
+            for elem in st.session_state.elements_added:
+                st.write(f"- {elem}")
+
+        st.write("Add elements to your compound:")
+        col1, col2 = st.columns(2)
+
+        with col1:
+          element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
+        with col2:
+          atoms = st.number_input("Number of atoms:", placeholder="1", value=None, min_value=1, step=1)
+
+        if st.button("Add Element"):
+          if element in elements:
+            element_obj = elements[element]
+            molar_mass_contribution = atoms * element_obj.atomic_mass
+            st.session_state.anhydrous_salt_molar_mass += molar_mass_contribution
+            st.session_state.elements_added.append(f"{element} × {atoms} = {molar_mass_contribution:.4f} g/mol")
+            st.rerun()
+          else:
+            st.error(f"{element} not found in the periodic table")
+
+        if st.button("Reset all"):
+          st.session_state.hydrated_salt_mass= 0
+          st.session_state.anhydrous_salt_mass= 0
+          st.session_state.anhydrous_salt_molar_mass = 0
+          st.session_state.elements_added = []
+          st.success("Reset successfully")
+          st.rerun()
+
+        
+        water_mass = hydrated_salt_mass - anhydrous_salt_mass
+        n_water = water_mass/18.015
+        n_salt = anhydrous_salt_mass/anhydrous_salt_molar_mass
+        x = n_water/n_salt
+        st.success(f"\nChemical formula: Salt ⋅ {round(x)}H₂O")
+
+        
+
+
+
+
+
+
+
+
+    
     elif option == "Solution Concentration":
       st.header("Solution Concentration")
 
