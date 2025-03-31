@@ -1,7 +1,7 @@
 import sys 
 
 
-class Element:
+class Element: 
   def __init__(self,symbol,name,atomic_number,atomic_mass,group,period):
     self.name=name
     self.symbol=symbol
@@ -1092,6 +1092,14 @@ if __name__ == "__main__":
           else:
             st.error(f"{element} not found in the periodic table")
 
+        
+        if st.button("Calculate Hydrate formula"):
+          water_mass = hydrated_salt_mass - anhydrous_salt_mass
+          n_water = water_mass/18.015
+          n_salt = anhydrous_salt_mass/anhydrous_salt_molar_mass
+          x = n_water/n_salt
+          st.success(f"\nChemical formula: Salt ⋅ {round(x)}H₂O")
+          
         if st.button("Reset all"):
           st.session_state.hydrated_salt_mass= 0
           st.session_state.anhydrous_salt_mass= 0
@@ -1100,13 +1108,9 @@ if __name__ == "__main__":
           st.success("Reset successfully")
           st.rerun()
 
-        
-        water_mass = hydrated_salt_mass - anhydrous_salt_mass
-        n_water = water_mass/18.015
-        n_salt = anhydrous_salt_mass/anhydrous_salt_molar_mass
-        x = n_water/n_salt
-        st.success(f"\nChemical formula: Salt ⋅ {round(x)}H₂O")
 
+
+        
         
 
 
