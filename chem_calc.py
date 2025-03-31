@@ -1081,7 +1081,7 @@ if __name__ == "__main__":
         with col2:
           anhydrous_salt_mass= st.number_input("anhydrous salt mass:", placeholder="10.0", value=None, min_value=0.0,step=0.1)
 
-        at.write("‎ ")
+        st.write("‎‎ ")
         st.write("Elements the hydrated salt consists of:")
         col1, col2 = st.columns(2)
 
