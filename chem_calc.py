@@ -891,7 +891,7 @@ if __name__ == "__main__":
 
       if sub_option == "Find moles":
         st.subheader("Finding number of moles")
-        mass = st.number_input("Mass (g):", placeholder="1.0", value=None, min_value=0.0,step=0.1)
+        mass = st.number_input("Mass (g):", placeholder="10.0", value=None, min_value=0.0,step=0.1)
         element = st.text_input("Element name or symbol:", placeholder="H").capitalize()
 
         if st.button("Calculate"):
@@ -1077,9 +1077,9 @@ if __name__ == "__main__":
 
         col1, col2 = st.columns(2)
         with col1:
-          hydrated_salt_mass= st.number_input("Hydrated salt mass:")
+          hydrated_salt_mass= st.number_input("Hydrated salt mass:", placeholder="10.0", value=None, min_value=0.0,step=0.1)
         with col2:
-          anhydrous_salt_mass= st.number_input("anhydrous salt mass:")
+          anhydrous_salt_mass= st.number_input("anhydrous salt mass:", placeholder="10.0", value=None, min_value=0.0,step=0.1)
         
         st.write("Elements the hydrated salt consists of:")
         col1, col2 = st.columns(2)
