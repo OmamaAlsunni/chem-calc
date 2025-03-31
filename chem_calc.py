@@ -1074,7 +1074,14 @@ if __name__ == "__main__":
             for elem in st.session_state.elements_added:
                 st.write(f"- {elem}")
 
-        st.write("Add elements to your compound:")
+
+        col1, col2 = st.columns(2)
+        with col1:
+          hydrated_salt_mass= st.number_input("Hydrated salt mass:")
+        with col2:
+          anhydrous_salt_mass= st.number_input("anhydrous salt mass:")
+        
+        st.write("Elements the hydrated salt consists of:")
         col1, col2 = st.columns(2)
 
         with col1:
@@ -1094,11 +1101,15 @@ if __name__ == "__main__":
 
         
         if st.button("Calculate Hydrate formula"):
-          water_mass = hydrated_salt_mass - anhydrous_salt_mass
-          n_water = water_mass/18.015
-          n_salt = anhydrous_salt_mass/anhydrous_salt_molar_mass
-          x = n_water/n_salt
-          st.success(f"\nChemical formula: Salt ⋅ {round(x)}H₂O")
+          if len(st.session_state.elements_added) == 0:
+            st.error("Please add at least one element first!")
+          else:
+            water_mass = hydrated_salt_mass - anhydrous_salt_mass
+            n_water = water_mass/18.015
+            n_salt = anhydrous_salt_mass/anhydrous_salt_molar_mass
+            x = n_water/n_salt
+            st.success(f"Hydrate formula: Salt ⋅ {round(x)}H₂O")
+          
           
         if st.button("Reset all"):
           st.session_state.hydrated_salt_mass= 0
