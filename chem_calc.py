@@ -877,7 +877,7 @@ if __name__ == "__main__":
       "Stoichiometry", 
       "Solution Concentration", 
       "Unit Conversions", 
-      "Percentage Per Mass Calculation"
+      "Percentage Composition Calculation"
     ]
 
     option = st.sidebar.selectbox("Select an operation", menu_options)
