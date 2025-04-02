@@ -1086,7 +1086,7 @@ if __name__ == "__main__":
         with col1:
           element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
         with col2:
-          atoms = st.number_input("Number of atoms:", placeholder="1", value=None, min_value=1, step=1)
+          atoms = st.number_input("Number of atoms:", placeholder="1", value=1, min_value=1, step=1)
 
         if st.button("Add Element"):
           if element in elements:
@@ -1126,16 +1126,6 @@ if __name__ == "__main__":
         if st.button("Calculate"):
           percentage = actual_yield/theoretical_yield*100
           st.success(f"Percent yield: {percentage:.2f}%")
-
-
-        
-        
-
-
-
-
-
-
 
 
     
