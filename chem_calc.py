@@ -877,7 +877,6 @@ if __name__ == "__main__":
       "Stoichiometry", 
       "Solution Concentration", 
       "Unit Conversions", 
-      "Percent Yield Calculation", 
       "Percentage Per Mass Calculation"
     ]
 
@@ -977,7 +976,7 @@ if __name__ == "__main__":
       st.header("Stoichiometry")
 
       sub_option = st.selectbox("Choose calculation type:", 
-                              ["Empirical & Molecular Formulas", "Formulas of Hydrates"])
+                              ["Empirical & Molecular Formulas", "Formulas of Hydrates", "Percent Yield calculation"])
       # Improved empirical formula calculation for Streamlit
 # To be added to your main_streamlit() function under the "Empirical & Molecular Formulas" section
 
@@ -1074,7 +1073,6 @@ if __name__ == "__main__":
             for elem in st.session_state.elements_added:
                 st.write(f"- {elem}")
 
-
         col1, col2 = st.columns(2)
         with col1:
           hydrated_salt_mass= st.number_input("Hydrated salt mass:", placeholder="10.0", value=None, min_value=0.0,step=0.1)
@@ -1100,7 +1098,6 @@ if __name__ == "__main__":
           else:
             st.error(f"{element} not found in the periodic table")
 
-        
         if st.button("Calculate Hydrate formula"):
           if len(st.session_state.elements_added) == 0:
             st.error("Please add at least one element first!")
@@ -1110,8 +1107,7 @@ if __name__ == "__main__":
             n_salt = anhydrous_salt_mass/st.session_state.anhydrous_salt_molar_mass
             x = n_water/n_salt
             st.success(f"Hydrate formula: Salt ⋅ {round(x)}H₂O")
-          
-          
+                  
         if st.button("Reset all"):
           st.session_state.hydrated_salt_mass= 0
           st.session_state.anhydrous_salt_mass= 0
@@ -1120,6 +1116,16 @@ if __name__ == "__main__":
           st.success("Reset successfully")
           st.rerun()
 
+      
+      elif sub_option == "Percent Yield Calculation":
+        st.header("Percent Yield Calculation")
+
+        actual_yield = st.number_input("Actual yield (g):", min_value=0.0, value=1.0, step=0.1)
+        theoretical_yield = st.number_input("Theoretical yield (g):", min_value=0.0001, value=1.0, step=0.1)
+
+        if st.button("Calculate"):
+          percentage = actual_yield/theoretical_yield*100
+          st.success(f"Percent yield: {percentage:.2f}%")
 
 
         
@@ -1226,7 +1232,7 @@ if __name__ == "__main__":
       st.header("Unit Conversions")
 
       sub_option = st.selectbox("Choose conversion type:", 
-                               ["Moles-Particles", "Liters-Moles", "Temperature", "Energy", "Pressure"])
+                               ["Moles-Particles", "Moles-Litres", "Temperature", "Energy", "Pressure"])
 
       if sub_option == "Moles-Particles":
         st.subheader("Moles-Particles Conversion")
@@ -1248,6 +1254,24 @@ if __name__ == "__main__":
             moles = particles / avogadro
             st.success(f"Number of moles: {moles:.4f} mol")
 
+      elif sub_option == "Moles-Litres":
+        st.subheader("Moles-Liters conversions")
+        conv_type = st.radio("convert:", ["Moles to Litres", "Litres to Moles"])
+
+        if conv_type == "Moles to Litres":
+          moles = st.number_input("Number of moles:", min_value=0.0, value=1.0, step=0.1)
+
+          if st.button("Convert"):
+            litres = moles*22.4
+            st.success(f"{litres}L is in {moles}mol")
+
+        elif conv_type == "Litres to Moles":
+          litres = st.number_input("Number of litres:", min_value=0.0, value=1.0, step=0.1)
+
+          if st.button("Convert"):
+            moles = litres/22.4
+            st.success(f"{moles}mol is in {litres}L")
+          
       elif sub_option == "Temperature":
         st.subheader("Temperature Conversion")
         conv_type = st.radio("Convert:", ["Kelvin to Celsius", "Celsius to Kelvin"])
@@ -1319,18 +1343,9 @@ if __name__ == "__main__":
             result = pressure / 760
             st.success(f"Pressure in atm: {result:.6f} atm")
 
-    elif option == "Percent Yield Calculation":
-      st.header("Percent Yield Calculation")
 
-      actual_yield = st.number_input("Actual yield (g):", min_value=0.0, value=1.0, step=0.1)
-      theoretical_yield = st.number_input("Theoretical yield (g):", min_value=0.0001, value=1.0, step=0.1)
-
-      if st.button("Calculate"):
-        percentage = actual_yield/theoretical_yield*100
-        st.success(f"Percent yield: {percentage:.2f}%")
-
-    elif option == "Percentage Per Mass Calculation":
-      st.header("Percentage Per Mass Calculation")
+    elif option == "Percentage Composition Calculation":
+      st.header("Percentage Composition Calculation")
 
       element_mass = st.number_input("Element mass (g):", min_value=0.0, value=1.0, step=0.1)
       compound_mass = st.number_input("Compound mass (g):", min_value=0.0001, value=10.0, step=0.1)
