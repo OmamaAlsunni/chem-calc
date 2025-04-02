@@ -982,11 +982,11 @@ if __name__ == "__main__":
 
       if sub_option == "Empirical & Molecular Formulas":
         st.subheader("Empirical & Molecular Formulas")
-
+         
   # Initialize session state variables
         if 'elements_added' not in st.session_state:
           st.session_state.elements_added = []
-    
+
   # Display current elements added in a simple list like compound molar mass
         if st.session_state.elements_added:
           st.write("Elements added:")
@@ -1066,11 +1066,11 @@ if __name__ == "__main__":
 
         if 'anhydrous_salt_molar_mass' not in st.session_state:
             st.session_state.anhydrous_salt_molar_mass = 0
-            st.session_state.elements_added = []
+            st.session_state.elements_stored = []
 
-        if st.session_state.elements_added:
+        if st.session_state.elements_stored:
             st.write("Elements added:")
-            for elem in st.session_state.elements_added:
+            for elem in st.session_state.elements_stored:
                 st.write(f"- {elem}")
 
         col1, col2 = st.columns(2)
@@ -1093,13 +1093,13 @@ if __name__ == "__main__":
             element_obj = elements[element]
             molar_mass_contribution = atoms * element_obj.atomic_mass
             st.session_state.anhydrous_salt_molar_mass += molar_mass_contribution
-            st.session_state.elements_added.append(f"{element} × {atoms} = {molar_mass_contribution:.4f} g/mol")
+            st.session_state.elements_stored.append(f"{element} × {atoms} = {molar_mass_contribution:.4f} g/mol")
             st.rerun()
           else:
             st.error(f"{element} not found in the periodic table")
 
         if st.button("Calculate Hydrate formula"):
-          if len(st.session_state.elements_added) == 0:
+          if len(st.session_state.elements_stored) == 0:
             st.error("Please add at least one element first!")
           else:
             water_mass = hydrated_salt_mass - anhydrous_salt_mass
@@ -1112,7 +1112,7 @@ if __name__ == "__main__":
           st.session_state.hydrated_salt_mass= 0
           st.session_state.anhydrous_salt_mass= 0
           st.session_state.anhydrous_salt_molar_mass = 0
-          st.session_state.elements_added = []
+          st.session_state.elements_stored = []
           st.success("Reset successfully")
           st.rerun()
 
