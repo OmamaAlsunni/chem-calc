@@ -998,7 +998,7 @@ if __name__ == "__main__":
         with col1:
           element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
         with col2:
-          mass = st.number_input("Mass of element (g):", value=None, placeholder="10.00", min_value=0.0, step=0.01)
+          mass = st.number_input("Mass of element (g):", value=None, placeholder="10.00", min_value=0.0, step=1.00)
 
   # Add element to the list
         if st.button("Add Element"):
@@ -1084,19 +1084,19 @@ if __name__ == "__main__":
         col1, col2 = st.columns(2)
 
         with col1:
-          element = st.text_input("Element name or symbol:", placeholder="C").capitalize()
+          element_1 = st.text_input("Element name or symbol:", placeholder="C").capitalize()
         with col2:
           atoms = st.number_input("Number of atoms:", placeholder="1", value=1, min_value=1, step=1)
 
         if st.button("Add Element"):
-          if element in elements:
-            element_obj = elements[element]
+          if element_1 in elements:
+            element_obj = elements[element_1]
             molar_mass_contribution = atoms * element_obj.atomic_mass
             st.session_state.anhydrous_salt_molar_mass += molar_mass_contribution
-            st.session_state.elements_stored.append(f"{element} × {atoms} = {molar_mass_contribution:.4f} g/mol")
+            st.session_state.elements_stored.append(f"{element_1} × {atoms} = {molar_mass_contribution:.4f} g/mol")
             st.rerun()
           else:
-            st.error(f"{element} not found in the periodic table")
+            st.error(f"{element_1} not found in the periodic table")
 
         if st.button("Calculate Hydrate formula"):
           if len(st.session_state.elements_stored) == 0:
