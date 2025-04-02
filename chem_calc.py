@@ -1107,7 +1107,7 @@ if __name__ == "__main__":
           else:
             water_mass = hydrated_salt_mass - anhydrous_salt_mass
             n_water = water_mass/18.015
-            n_salt = anhydrous_salt_mass/anhydrous_salt_molar_mass
+            n_salt = anhydrous_salt_mass/st.session_state.anhydrous_salt_molar_mass
             x = n_water/n_salt
             st.success(f"Hydrate formula: Salt ⋅ {round(x)}H₂O")
           
