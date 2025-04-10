@@ -1344,9 +1344,18 @@ if __name__ == "__main__":
         percentage = element_mass*100/compound_mass
         st.success(f"Percentage per mass: {percentage:.2f}%")
 
+    try:
+    # Your app code here
+except Exception as e:
+    st.error(f"An error occurred: {str(e)}")
+    st.markdown("""
+    <div style="text-align: center; margin-top: 20px;">
+        <small>Help improve this app! 
+        <a href="mailto:omama.alsunni@gmail.com?subject=Bug Report">Report this issue</a></small>
+    </div>
+    """, unsafe_allow_html=True)
     st.markdown("\n\n\n\n \nDeveloped by Omamah Fath AL-Rahman Alsunni")
-    st.write("omama.alsunni@gmail.com")
-
+    
 
   # Run the Streamlit app
   main_streamlit()
