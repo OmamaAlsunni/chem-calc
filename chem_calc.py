@@ -1345,7 +1345,7 @@ if __name__ == "__main__":
         st.success(f"Percentage per mass: {percentage:.2f}%")
 
     st.markdown("\n\n\n\n \nDeveloped by Omamah Fath AL-Rahman Alsunni")
-    ast.write("omama.alsunni@gmail.com")
+    st.write("omama.alsunni@gmail.com")
 
 
   # Run the Streamlit app
