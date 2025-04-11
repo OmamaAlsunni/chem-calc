@@ -1000,6 +1000,8 @@ if __name__ == "__main__":
         with col2:
           mass = st.number_input("Mass of element (g):", value=None, placeholder="10.00", min_value=0.0, step=1.00)
 
+        st.write("For clarity, please enter elements in the standard order of the compound (e.g., enter H before O in 'H₂O' ).")
+
   # Add element to the list
         if st.button("Add Element"):
           if element in elements: 
