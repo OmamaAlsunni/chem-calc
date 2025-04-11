@@ -1120,7 +1120,7 @@ if __name__ == "__main__":
       elif sub_option == "Percent Yield Calculation":
         st.header("Percent Yield Calculation")
 
-        actual_yield = st.number_input("Actual yield (g):", min_value=0.0, value=0, placeholder="10.00" , step=0.1)
+        actual_yield = st.number_input("Actual yield (g):", min_value=0.0, value=0.0, placeholder="10.00" , step=0.1)
         theoretical_yield = st.number_input("Theoretical yield (g):", min_value=0.0001, value=None, placeholder="10.00" ,step=0.1)
 
         if st.button("Calculate"):
