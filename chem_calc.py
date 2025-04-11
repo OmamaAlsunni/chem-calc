@@ -976,7 +976,7 @@ if __name__ == "__main__":
       st.header("Stoichiometry")
 
       sub_option = st.selectbox("Choose calculation type:", 
-                              ["Empirical & Molecular Formulas", "Formulas of Hydrates", "Percent Yield calculation"])
+                              ["Empirical & Molecular Formulas", "Formulas of Hydrates", "Percent Yield Calculation"])
       # Improved empirical formula calculation for Streamlit
 # To be added to your main_streamlit() function under the "Empirical & Molecular Formulas" section
 
