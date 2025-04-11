@@ -1344,9 +1344,9 @@ if __name__ == "__main__":
         percentage = element_mass*100/compound_mass
         st.success(f"Percentage per mass: {percentage:.2f}%")
 
-    try:
+try:
     # Your app code here
-except Exception as e:
+  except Exception as e:
     st.error(f"An error occurred: {str(e)}")
     st.markdown("""
     <div style="text-align: center; margin-top: 20px;">
