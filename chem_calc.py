@@ -1121,7 +1121,7 @@ if __name__ == "__main__":
         st.header("Percent Yield Calculation")
 
         actual_yield = st.number_input("Actual yield (g):", min_value=0.0, value=0, placeholder="10.00" , step=0.1)
-        theoretical_yield = st.number_input("Theoretical yield (g):", min_value=0.0001, value=0, placeholder="10.00" ,step=0.1)
+        theoretical_yield = st.number_input("Theoretical yield (g):", min_value=0.0001, value=None, placeholder="10.00" ,step=0.1)
 
         if st.button("Calculate"):
           percentage = actual_yield*100/theoretical_yield
