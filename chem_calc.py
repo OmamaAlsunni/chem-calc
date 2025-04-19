@@ -869,8 +869,8 @@ if __name__ == "__main__":
   import streamlit as st
 
   def main_streamlit():
-    st.title("Chemistry Calculator")
-    st.write("Welcome to the Chemistry Calculator! Select an operation from the sidebar to get started.")
+    st.title("ChemiCalc")
+    st.write("Welcome to ChemiCalc! Select an operation from the sidebar to get started.")
     
     menu_options = [
       "Mole & Mass Calculations", 
